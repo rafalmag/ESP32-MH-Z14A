@@ -6,6 +6,9 @@
 
 #define V_REF 1100
 
+/**
+   ADC1_CHANNEL_0 pin hardcoded, ie. GPIO_36
+ */
 class Co2FromAdc
 {
   private:
