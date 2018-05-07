@@ -2,6 +2,7 @@
 #include <driver/adc.h>
 #include "esp_adc_cal.h"
 #include "co2FromAdc.h"
+#include "co2FromPwm.h"
 
 /**
    simple MH-Z14A CO2 level monitor
@@ -77,43 +78,13 @@ int getCO2FromSerial2()
   }
 }
 
-int waitUntilHigh(uint8_t pin)
-{
-  int start = micros();
-  while (digitalRead(pin) < 0.5)
-  {
-    delay(1);
-  }
-  return micros() - start;
-}
-
-int waitUntilLow(uint8_t pin)
-{
-  int start = micros();
-  while (digitalRead(pin) > 0.5)
-  {
-    delay(1);
-  }
-  return micros() - start;
-}
-
-int getCO2FromPwm()
-{
-  waitUntilHigh(PWM_CO2);
-  int tH = waitUntilLow(PWM_CO2);
-  int tL = waitUntilHigh(PWM_CO2);
-  return (int)(5000.0 * (float)(tH - 2) / (float)(tH + tL - 4));
-}
-
 Co2FromAdc co2FromAdc;
+Co2FromPwm co2FromPwm(PWM_CO2);
 
 void setup()
 {
-  // init pwm
-  pinMode(34, INPUT);
-
-  // init adc
   co2FromAdc.init();
+  co2FromPwm.init();
 
   // init serial
   Serial2.begin(9600); // communication for MH-Z14A
@@ -137,7 +108,7 @@ void loop()
 {
   Serial.println(String("serial: ") + getCO2FromSerial2());
   Serial.println(String("analog: ") + co2FromAdc.getCO2());
-  Serial.println(String("pwm   : ") + getCO2FromPwm());
+  Serial.println(String("pwm   : ") + co2FromPwm.getCO2());
   Serial.println();
   delay(3000);
   digitalWrite(LED, HIGH);
