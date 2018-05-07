@@ -8,8 +8,8 @@ Co2FromSerial::Co2FromSerial(HardwareSerial serial) : serial(serial)
 
 void Co2FromSerial::init()
 {
-    serial.begin(9600); // communication for MH-Z14A
-    clearSerialBuffer();      // read out garbage (i have no idea why but this is a must have for mobile battery operation)
+    serial.begin(9600);  // communication for MH-Z14A
+    clearSerialBuffer(); // read out garbage (i have no idea why but this is a must have for mobile battery operation)
 }
 
 void Co2FromSerial::clearSerialBuffer()

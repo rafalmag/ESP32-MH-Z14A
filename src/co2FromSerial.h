@@ -13,15 +13,15 @@
 
 class Co2FromSerial
 {
-  private:
-    HardwareSerial serial;
-    static const uint8_t readCo2Cmd[];
-    void clearSerialBuffer();
+private:
+  HardwareSerial serial;
+  static const uint8_t readCo2Cmd[];
+  void clearSerialBuffer();
 
-  public:
-    Co2FromSerial(HardwareSerial serial);
-    void init();
-    int getCO2();
+public:
+  Co2FromSerial(HardwareSerial serial);
+  void init();
+  int getCO2();
 };
 
 #endif /*_CO2_FROM_SERIAL*/

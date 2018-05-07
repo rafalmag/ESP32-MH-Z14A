@@ -11,12 +11,12 @@
  */
 class Co2FromAdc
 {
-  private:
-    esp_adc_cal_characteristics_t characteristics;
+private:
+  esp_adc_cal_characteristics_t characteristics;
 
-  public:
-    void init();
-    int getCO2();
+public:
+  void init();
+  int getCO2();
 };
 
 #endif /*_CO2_FROM_ADC_H_*/
