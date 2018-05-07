@@ -109,38 +109,36 @@ int getCO2FromAdc()
   return (int)(mVoltDiff * 50.0 / 16.0);
 }
 
+int waitUntilHigh(uint8_t pin) {
+  int start = micros();
+  while (digitalRead(pin) < 0.5)
+  {
+    delay(1);
+  }
+  return micros()-start;
+}
+
+int waitUntilLow(uint8_t pin) {
+  int start = micros();
+  while (digitalRead(pin) > 0.5)
+  {
+    delay(1);
+  }
+  return micros()-start;
+}
+
 int getCO2FromPwm()
 {
-
-  int start = micros();
-  // wait low
-  while (digitalRead(PWM_CO2) < 0.5)
-  {
-    delay(1);
-  }
-  long highStart = millis();
-  // wait high
-  while (digitalRead(PWM_CO2) > 0.5)
-  {
-    delay(1);
-  }
-  long lowStart = millis();
-  // wait low
-  while (digitalRead(PWM_CO2) < 0.5)
-  {
-    delay(1);
-  }
-  long high2Start = millis();
-
-  int tH = lowStart - highStart;
-  int tL = high2Start - lowStart;
+  waitUntilHigh(PWM_CO2);
+  int tH = waitUntilLow(PWM_CO2);
+  int tL = waitUntilHigh(PWM_CO2);
   return (int)(5000.0 * (float)(tH - 2) / (float)(tH + tL - 4));
 }
 
 void setup()
 {
   // init pwm
-  pinMode(34, PWM_CO2);
+  pinMode(34, INPUT);
 
   // init adc
   adc1_config_width(ADC_WIDTH_BIT_11);                        //Range 10 - 0-1023 11 - 0-2047
