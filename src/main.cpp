@@ -59,13 +59,13 @@ void loop()
   Serial.println(String("pwm   : ") + pwmCo2);
   Serial.println();
 
-  lcd.clear();
-  // lcd.setCursor(0, 0);
-  lcd.print(String("serial: ") + serialCo2);
+  // lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(String("serial: ") + serialCo2 + "   ");
   lcd.setCursor(0, 1);
-  lcd.print(String("analog: ") + adcCo2);
+  lcd.print(String("analog: ") + adcCo2 + "   ");
   lcd.setCursor(0, 2);
-  lcd.print(String("pwm   : ") + pwmCo2);
+  lcd.print(String("pwm   : ") + pwmCo2 + "   ");
 
   delay(3000);
   digitalWrite(LED, HIGH);
