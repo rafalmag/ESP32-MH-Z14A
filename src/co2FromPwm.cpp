@@ -31,7 +31,19 @@ void Co2FromPwm::init()
 
 int Co2FromPwm::getCO2()
 {
-    waitUntilHigh(pin);
+    //init
+    if (digitalRead(pin) < 0.5)
+    {
+        // it is low, so
+        waitUntilHigh(pin);
+    }
+    else
+    {
+        // it is high
+        waitUntilLow(pin);
+        waitUntilHigh(pin);
+    }
+    //measure high then low
     int tH = waitUntilLow(pin);
     int tL = waitUntilHigh(pin);
     return (int)(5000.0 * (float)(tH - 2) / (float)(tH + tL - 4));
