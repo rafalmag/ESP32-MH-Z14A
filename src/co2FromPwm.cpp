@@ -3,7 +3,7 @@
 int Co2FromPwm::waitUntilHigh(uint8_t pin)
 {
     int start = micros();
-    while (digitalRead(pin) < 0.5)
+    while (digitalRead(pin) == LOW)
     {
         delay(1);
     }
@@ -13,7 +13,7 @@ int Co2FromPwm::waitUntilHigh(uint8_t pin)
 int Co2FromPwm::waitUntilLow(uint8_t pin)
 {
     int start = micros();
-    while (digitalRead(pin) > 0.5)
+    while (digitalRead(pin) == HIGH)
     {
         delay(1);
     }
@@ -32,7 +32,7 @@ void Co2FromPwm::init()
 int Co2FromPwm::getCO2()
 {
     //init
-    if (digitalRead(pin) < 0.5)
+    if (digitalRead(pin) == LOW)
     {
         // it is low, so
         waitUntilHigh(pin);
